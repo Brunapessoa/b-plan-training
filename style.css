@@ -32,6 +32,12 @@ header p {
     margin: 40px 0px 0px 20px;
 }
 
+main {
+    display: grid;
+    align-content: space-evenly;
+    justify-content: center;
+} 
+
 section,
 div {
     margin: 20px;
