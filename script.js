@@ -1,16 +1,36 @@
-let addButton = document.getElementById('addButton');
-let inputExercise = document.getElementById('inputExercise');
-let inputWeight = document.getElementById('inputWeight');
-let inputReps = document.getElementById('inputReps');
+let addButton = document.getElementsByClassName('addButton');
+let inputExercise = document.getElementsByClassName('inputExercise');
+let inputWeight = document.getElementsByClassName('inputWeight');
+let inputReps = document.getElementsByClassName('inputReps');
 
-addButton.addEventListener('click', addExercise);
+for (let index = 0; index < addButton.length; index ++) {
+    addButton[index].addEventListener('click', addExercise);
+}
 
-let tableExercises = document.getElementById('tableExercises');
 
-function addExercise() {
-    let exercisesList = inputExercise.value;
-    let weightsList = inputWeight.value;
-    let repsList = inputReps.value;
+// let tableExercises = document.getElementsByClassName('tableExercises');
+
+function addExercise(event) {
+    let workoutId = event.target.parentElement.id;
+    let workoutIndex = 0;
+    if (workoutId == 'workoutA') {
+        workoutIndex = 0;
+    } else if (workoutId == 'workoutB') {
+        workoutIndex = 1;
+    } else if (workoutId == 'workoutC') {
+        workoutIndex = 2;
+    }
+
+    let divWorkout = event.target.parentElement;  //pai do elemento clicado - botao clicado 
+
+    let tableElement = divWorkout.firstElementChild;
+    
+    let tbodyElement = tableElement.lastElementChild; // acessando o tbody
+
+    let exercisesList = inputExercise[workoutIndex].value; 
+    let weightsList = inputWeight[workoutIndex].value;
+    let repsList = inputReps[workoutIndex].value;
+    // recebem o index indicado no início da funcao, para povoar a tabela correta
 
     let exercise = exercisesList;
     let weight = weightsList;
@@ -21,11 +41,11 @@ function addExercise() {
         exerciseItem.innerHTML = `<td>${exercise}</td><td>${weight}</td><td>${reps}</td><td><button class='delButton'>remover</button></td>`;
         console.log(exerciseItem);      
 
-        tableExercises.appendChild(exerciseItem);
+        tbodyElement.appendChild(exerciseItem);
         
-        inputExercise.value = '';
-        inputWeight.value = '';
-        inputReps.value = '';
+        inputExercise[workoutIndex].value = '';
+        inputWeight[workoutIndex].value = '';
+        inputReps[workoutIndex].value = '';
         
         // Delete Button:
         let delButton = document.getElementsByClassName('delButton');
