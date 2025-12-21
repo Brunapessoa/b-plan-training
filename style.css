@@ -43,6 +43,37 @@ div {
     margin: 20px;
 }
 
+table {
+    margin-bottom: 15px;
+    text-align: center;
+    width: 400px;
+    border-radius: 2px;
+    border: 1px solid;
+    border-color: rgba(214, 214, 213, 0.699);   
+    font-size: 0.9em; 
+    color: rgb(58, 58, 58);
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: rgba(221, 200, 174, 0.336);
+}
+th {
+    padding: 2px;
+}
+
+tbody > tr:nth-child(2n) {
+    background-color: rgba(233, 233, 233, 0.829);
+}
+
+th, td {
+    box-sizing: inherit;
+}
+
+td, th {
+    border-inline: none;
+}
+
 input {
     padding: 2px;
     text-indent: 2px;
