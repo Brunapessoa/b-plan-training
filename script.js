@@ -2,13 +2,10 @@ let addButton = document.getElementsByClassName('addButton');
 let inputExercise = document.getElementsByClassName('inputExercise');
 let inputWeight = document.getElementsByClassName('inputWeight');
 let inputReps = document.getElementsByClassName('inputReps');
-let workoutA = document.getElementById('workoutA');
 
-
-for (let index = 0; index < addButton.length; index ++) {
+for (let index = 0; index < addButton.length; index++) {
     addButton[index].addEventListener('click', addExercise);
 }
-
 
 function addExercise(event) {
     let workoutId = event.target.parentElement.id;
@@ -20,17 +17,21 @@ function addExercise(event) {
         workoutIndex = 1;
     } else if (workoutId == 'workoutC') {
         workoutIndex = 2;
+    } else if (workoutId == 'workoutD') {
+        workoutIndex = 3;
+    } else if (workoutId == 'workoutE') {
+        workoutIndex = 4;
     }
 
-    let divWorkout = event.target.parentElement;  
+    let divWorkout = event.target.parentElement;
     //pai do elemento clicado - botao clicado 
 
     let tableElement = divWorkout.firstElementChild;
     // acessando a tabela correspondente ao botão clicado
-    
+
     let tbodyElement = tableElement.lastElementChild; // acessando o tbody
 
-    let exercises = inputExercise[workoutIndex].value; 
+    let exercises = inputExercise[workoutIndex].value;
     let weights = inputWeight[workoutIndex].value;
     let reps = inputReps[workoutIndex].value;
     // recebem o index indicado no início da funcao, para povoar a tabela correta
@@ -38,79 +39,251 @@ function addExercise(event) {
     let exerciseItem = exercises;
     let weightItem = weights;
     let repsItem = reps;
-    let editBtn = '<button>Edit</button>'; 
+    let editBtn = '<button class="editButton">Edit</button>';
     let removeBtn = '<button class="delButton">Remove</button>';
 
-
     let exerciseElement = document.createElement('tr');
-        exerciseElement.innerHTML = `<td>${exerciseItem}</td><td>${weightItem}</td><td>${repsItem}</td><td>${editBtn}</td><td>${removeBtn}</td>`;
-        // console.log(exerciseElement);      
+    exerciseElement.innerHTML = `<td>${exerciseItem}</td><td>${weightItem}</td><td>${repsItem}</td><td>${editBtn}</td><td>${removeBtn}</td>`;
+    // console.log(exerciseElement);      
 
-        tbodyElement.appendChild(exerciseElement);
+    tbodyElement.appendChild(exerciseElement);
 
-        let trElements = divWorkout.getElementsByTagName('tr');
-        if(exerciseElement) {
-            for(let i = 0; i < trElements.length; i++) {
-                trElements[i].id = workoutId +`${(i)}`;
-            }
-            console.log(trElements);
+    let trElements = divWorkout.getElementsByTagName('tr');
+    if (exerciseElement) {
+        for (let i = 0; i < trElements.length; i++) {
+            trElements[i].id = workoutId + `${(i)}`;
         }
-        
-        
-        inputExercise[workoutIndex].value = '';
-        inputWeight[workoutIndex].value = '';
-        inputReps[workoutIndex].value = '';
-        
-        let exercisesList = JSON.parse(localStorage.getItem(workoutId)) ||[];
+        console.log(trElements);
+    }
 
-        const newExercise = {
-            exercise: exerciseItem,
-            wheigths: weightItem,
-            reps: repsItem
+    inputExercise[workoutIndex].value = '';
+    inputWeight[workoutIndex].value = '';
+    inputReps[workoutIndex].value = '';
+
+    let exercisesList = JSON.parse(localStorage.getItem(workoutId)) || [];
+
+    const newExercise = {
+        exercise: exerciseItem,
+        weights: weightItem,
+        reps: repsItem
+    }
+    exercisesList.push(newExercise);
+
+    //console.log(exercisesList);
+
+    localStorage.setItem(workoutId, JSON.stringify(exercisesList));
+
+    // Delete Button:
+    let delButton = document.getElementsByClassName('delButton');
+
+    if (delButton.length > 0) {
+
+        let removeBtn;
+        for (let index = 0; index < delButton.length; index++) {
+            // adiciona a funcao delExercise em todos os botões que forem criados
+            removeBtn = delButton[index];
         }
-        exercisesList.push(newExercise);
+        removeBtn.addEventListener('click', delExercise);
+    }
 
-        //console.log(exercisesList);
-        
-        localStorage.setItem(workoutId, JSON.stringify(exercisesList));     
+    let editButton = document.getElementsByClassName('editButton');
 
-        // Delete Button:
-        let delButton = document.getElementsByClassName('delButton');
-        
-        if (delButton.length > 0) {
-            
-            let removeBtn;
-            for(let index = 0; index < delButton.length; index++) {
-                // adiciona a funcao delExercise em todos os botões que forem criados
-                removeBtn = delButton[index];
-            }          
+    if (editButton.length > 0) {
+
+        let editBtn;
+        for (let i = 0; i < editButton.length; i++) {
+            editBtn = editButton[i];
+            editBtn.addEventListener('click', editExercise);
+        }
+    }
+}
+
+function updateWorkout(workout, tableWorkout) {
+    const exercisesOfTable = JSON.parse(localStorage.getItem(workout)) || [];
+
+    // console.log(exercisesOfTable);
+    const tableExercises = document.getElementById(tableWorkout);
+
+    let exercise;
+    let weights;
+    let reps;
+    let editBtn = '<button class="editButton">Edit</button>';
+    let removeBtn = '<button class="delButton">Remove</button>';
+
+    for (let i = 0; i < exercisesOfTable.length; i++) {
+        exercise = exercisesOfTable[i].exercise;
+        weights = exercisesOfTable[i].weights;
+        reps = exercisesOfTable[i].reps;
+
+        let exerciseElement = document.createElement('tr');
+        exerciseElement.innerHTML = `<td>${exercise}</td><td>${weights}</td><td>${reps}</td><td>${editBtn}</td><td>${removeBtn}</td>`;
+
+        tableExercises.appendChild(exerciseElement);
+    }
+
+    let trElements = tableExercises.getElementsByTagName('tr');
+
+    if (exercisesOfTable) {
+        for (let i = 0; i < trElements.length; i++) {
+            trElements[i].id = workout + `${(i)}`;
+        }
+        console.log(trElements);
+    }
+
+    let delButton = tableExercises.getElementsByClassName('delButton');
+
+    if (delButton.length > 0) {
+
+        let removeBtn;
+        for (let i = 0; i < delButton.length; i++) {
+            // adiciona a funcao delExercise em todos os botões que forem criados
+            removeBtn = delButton[i];
             removeBtn.addEventListener('click', delExercise);
         }
-        
-        
+    }
+
+    let editButton = tableExercises.getElementsByClassName('editButton')
+
+    if (editButton.length > 0) {
+
+        let editBtn;
+        for (let i = 0; i < editButton.length; i++) {
+            editBtn = editButton[i];
+            editBtn.addEventListener('click', editExercise);
+        }
+    }
+}
+
+function editExercise(event) {
+    let editButtonElemet = event.target;
+    editButtonElemet.disabled = true;
+
+
+    let buttonParentElement = event.target.parentElement;
+
+    let saveButton = document.createElement('button');
+    saveButton.className = 'saveButton';
+    saveButton.innerText = 'Save';
+    
+    buttonParentElement.appendChild(saveButton);
+
+    saveButton.addEventListener('click', saveExercise)
+
+    
+    let trElement = buttonParentElement.parentElement;
+
+    let exerciseNameElement = trElement.firstElementChild;
+
+    let exerciseName = exerciseNameElement.innerText;
+    exerciseNameElement.innerText = '';
+
+    let textAreaExerciseName = document.createElement('textarea');
+    textAreaExerciseName.innerText = exerciseName;
+    
+    exerciseNameElement.appendChild(textAreaExerciseName);
+
+    let weightsElement = exerciseNameElement.nextElementSibling;
+    
+    let weights = weightsElement.innerText;
+    weightsElement.innerText = '';
+
+    let textareaWeights = document.createElement('textarea');
+    textareaWeights.innerText = weights;
+    
+    weightsElement.appendChild(textareaWeights);
+
+    let repsElement = weightsElement.nextElementSibling;
+
+    let reps = repsElement.innerText;
+    repsElement.innerText = '';
+
+    let texteareaReps = document.createElement('textarea');
+    texteareaReps.innerText = reps;
+
+    repsElement.appendChild(texteareaReps)
+}
+
+function saveExercise(event) {
+    console.log('entrou na funcao para salvar a edicao do exercicio');
+    let buttonParentElement = event.target.parentElement;
+
+    let parentElement = buttonParentElement.parentElement;
+
+    let textareaExerciseName = parentElement.getElementsByTagName('textarea')[0];
+    let textareaWeights = parentElement.getElementsByTagName('textarea')[1];
+    let texteareaReps = parentElement.getElementsByTagName('textarea')[2];
+
+    let tdNameExercise = textareaExerciseName.parentElement;
+    let tdWeights = textareaWeights.parentElement;
+    let tdReps = texteareaReps.parentElement;
+    
+
+    tdNameExercise.innerHTML = textareaExerciseName.value;
+    tdWeights.innerHTML = textareaWeights.value;
+    tdReps.innerHTML = texteareaReps.value;
+    
+    let editButton = buttonParentElement.firstElementChild;
+    editButton.disabled = false;
+
+    let saveButton = editButton.nextElementSibling;
+
+    buttonParentElement.removeChild(saveButton);
+    
+    // 2o passo: colocar as novas informacoes de exercicio, peso e reps no localstorage
+
+}
+
+
+
+/* Edit button:
+01 - click do botão;
+
+02 - botao de edit se cria em botão de salvar - funcao callback?
+
+03 - abrem caixas de textos onde tem a descricao do exercicio, peso e repeticao
+03.1 - pega a informacao do localstorage e mantém na caixa de texto, para que a apartir dela seja editada a informacao
+
+04 - click do botao salvar
+04.1 - mantém as alteracoes e salva no local storage.
+
+05 - as informacoes são setadas na mesma posicao do array e do localstorage
+  */
+
+function onLoadExercises() {
+
+    updateWorkout('workoutA', 'tableA');
+    updateWorkout('workoutB', 'tableB');
+    updateWorkout('workoutC', 'tableC');
+    updateWorkout('workoutD', 'tableD');
+    updateWorkout('workoutE', 'tableE');
+
 }
 
 function delExercise(event) {
     let butElement = event.target.parentElement;
     // o event.target já é o elemento do botão que foi clicado
     // aqui, esta subindo um degrau da hierarquia, para acessar o td onde está o button
-    
+
     let trButElement = butElement.parentElement;
     // aqui está subindo uma hierarquia, para acessar o tr, onde está o td, onde esta o button;
-    
+
     let tbodyElement = trButElement.parentElement;
     // acessando o tbody, que é pai do tr
-    
+
     tbodyElement.removeChild(trButElement);
 
     let tableId = tbodyElement.id;
     let workoutId = '';
-    if(tableId == 'tableA') {
+    if (tableId == 'tableA') {
         workoutId = 'workoutA';
     } else if (tableId == 'tableB') {
         workoutId = 'workoutB';
     } else if (tableId == 'tableC') {
         workoutId = 'workoutC';
+    } else if (tableId == 'tableD') {
+        workoutId = 'workoutD';
+    } else if (tableId == 'tableE') {
+        workoutId = 'workoutE';
     }
 
     let exercisesList = JSON.parse(localStorage.getItem(workoutId));
@@ -118,13 +291,13 @@ function delExercise(event) {
     let idTrButElement = trButElement.id;
     // console.log(idTrButElement);
     // idTrButElement é uma string de 9 letras: workoutA4 
-    let strIdExercise = idTrButElement.slice(8, 9); 
+    let strIdExercise = idTrButElement.slice(8, 9);
     // pega apenas o número da strind do id
-    let numIdExercise = Number(strIdExercise)-1;
+    let numIdExercise = Number(strIdExercise) - 1;
     // -1 para pegar o elemento na ordem do array
-    
+
     // console.log(numIdExercise);
-    
+
     // exercisesList => [ hgfjhsdghsd, fkdhkfs, dskjhfjksdh, fksdjhfkjhsd]
     // quero apagar o segundo elemento = 1
     // ??????
@@ -132,36 +305,27 @@ function delExercise(event) {
     console.log(exercisesList);
 
     localStorage.setItem(workoutId, JSON.stringify(exercisesList));
-    
-
-
-
-    // for(let i = 0; i < exercisesList.length; i++){
-        
-
-    // }
 
     // proximo passo descobri qual linha está o botao clicado
 
-        // let tdParentBtn = event.target.parentElement;
-        // elemento pai do botão que foi clicado;
-        // let trParentTdBtn = tdParentBtn.parentElement; 
-        // elemento pai do td onde está o botão; 
-        // let tbodParentTr = trParentTdBtn.parentElement
-        
-        let tableElement = tbodyElement.parentElement;
-        // elemento pai do tbody;
-        let divWorkout = tableElement.parentElement;
-        
-        let trElements = divWorkout.getElementsByTagName('tr');
-        if(trElements) {
-            for(let i = 0; i < trElements.length; i++) {
-                trElements[i].id = workoutId +`${(i)}`;
-            }
+    // let tdParentBtn = event.target.parentElement;
+    // elemento pai do botão que foi clicado;
+    // let trParentTdBtn = tdParentBtn.parentElement; 
+    // elemento pai do td onde está o botão; 
+    // let tbodParentTr = trParentTdBtn.parentElement
+
+    let tableElement = tbodyElement.parentElement;
+    // elemento pai do tbody;
+    let divWorkout = tableElement.parentElement;
+
+    let trElements = divWorkout.getElementsByTagName('tr');
+    if (trElements) {
+        for (let i = 0; i < trElements.length; i++) {
+            trElements[i].id = workoutId + `${(i)}`;
         }
-        //console.log(trElements);
-    
-    
+    }
+    //console.log(trElements);
 }
 
-    
+window.onload = onLoadExercises;
+
