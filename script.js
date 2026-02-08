@@ -205,49 +205,52 @@ function editExercise(event) {
 
 function saveExercise(event) {
     console.log('entrou na funcao para salvar a edicao do exercicio');
-    let buttonParentElement = event.target.parentElement;
+    let tdButtonParentElement = event.target.parentElement;
 
-    let parentElement = buttonParentElement.parentElement;
+    let trParentElement = tdButtonParentElement.parentElement;
 
-    let textareaExerciseName = parentElement.getElementsByTagName('textarea')[0];
-    let textareaWeights = parentElement.getElementsByTagName('textarea')[1];
-    let texteareaReps = parentElement.getElementsByTagName('textarea')[2];
+    let textareaExerciseName = trParentElement.getElementsByTagName('textarea')[0];
+    let textareaWeights = trParentElement.getElementsByTagName('textarea')[1];
+    let texteareaReps = trParentElement.getElementsByTagName('textarea')[2];
 
     let tdNameExercise = textareaExerciseName.parentElement;
     let tdWeights = textareaWeights.parentElement;
-    let tdReps = texteareaReps.parentElement;
-    
+    let tdReps = texteareaReps.parentElement;  
 
     tdNameExercise.innerHTML = textareaExerciseName.value;
     tdWeights.innerHTML = textareaWeights.value;
     tdReps.innerHTML = texteareaReps.value;
     
-    let editButton = buttonParentElement.firstElementChild;
+    //console.log(trParentElement.id);
+    
+    let workoutId = trParentElement.id.slice(0, 8);
+    let exerciseId = trParentElement.id.slice(8);
+    console.log(exerciseId);
+    
+    // console.log(workoutId);
+    
+    
+    let exercisesListEdited = JSON.parse(localStorage.getItem(workoutId)) || [];
+
+    let exerciseEdited = {
+        exercise: textareaExerciseName.value,
+        weights: textareaWeights.value,
+        reps: texteareaReps.value
+    } 
+
+    exercisesListEdited[exerciseId] = exerciseEdited;
+
+    localStorage.setItem(workoutId, JSON.stringify(exercisesListEdited));
+
+    
+    let editButton = tdButtonParentElement.firstElementChild;
     editButton.disabled = false;
 
     let saveButton = editButton.nextElementSibling;
 
-    buttonParentElement.removeChild(saveButton);
-    
-    // 2o passo: colocar as novas informacoes de exercicio, peso e reps no localstorage
-
+    tdButtonParentElement.removeChild(saveButton);
 }
 
-
-
-/* Edit button:
-01 - click do botão;
-
-02 - botao de edit se cria em botão de salvar - funcao callback?
-
-03 - abrem caixas de textos onde tem a descricao do exercicio, peso e repeticao
-03.1 - pega a informacao do localstorage e mantém na caixa de texto, para que a apartir dela seja editada a informacao
-
-04 - click do botao salvar
-04.1 - mantém as alteracoes e salva no local storage.
-
-05 - as informacoes são setadas na mesma posicao do array e do localstorage
-  */
 
 function onLoadExercises() {
 
@@ -261,14 +264,10 @@ function onLoadExercises() {
 
 function delExercise(event) {
     let butElement = event.target.parentElement;
-    // o event.target já é o elemento do botão que foi clicado
-    // aqui, esta subindo um degrau da hierarquia, para acessar o td onde está o button
 
     let trButElement = butElement.parentElement;
-    // aqui está subindo uma hierarquia, para acessar o tr, onde está o td, onde esta o button;
 
     let tbodyElement = trButElement.parentElement;
-    // acessando o tbody, que é pai do tr
 
     tbodyElement.removeChild(trButElement);
 
@@ -289,30 +288,17 @@ function delExercise(event) {
     let exercisesList = JSON.parse(localStorage.getItem(workoutId));
     // console.log(exercisesList);
     let idTrButElement = trButElement.id;
-    // console.log(idTrButElement);
-    // idTrButElement é uma string de 9 letras: workoutA4 
+
     let strIdExercise = idTrButElement.slice(8, 9);
     // pega apenas o número da strind do id
     let numIdExercise = Number(strIdExercise) - 1;
-    // -1 para pegar o elemento na ordem do array
 
-    // console.log(numIdExercise);
-
-    // exercisesList => [ hgfjhsdghsd, fkdhkfs, dskjhfjksdh, fksdjhfkjhsd]
-    // quero apagar o segundo elemento = 1
-    // ??????
     exercisesList.splice(numIdExercise, 1);
     console.log(exercisesList);
 
     localStorage.setItem(workoutId, JSON.stringify(exercisesList));
 
     // proximo passo descobri qual linha está o botao clicado
-
-    // let tdParentBtn = event.target.parentElement;
-    // elemento pai do botão que foi clicado;
-    // let trParentTdBtn = tdParentBtn.parentElement; 
-    // elemento pai do td onde está o botão; 
-    // let tbodParentTr = trParentTdBtn.parentElement
 
     let tableElement = tbodyElement.parentElement;
     // elemento pai do tbody;
@@ -324,7 +310,6 @@ function delExercise(event) {
             trElements[i].id = workoutId + `${(i)}`;
         }
     }
-    //console.log(trElements);
 }
 
 window.onload = onLoadExercises;
