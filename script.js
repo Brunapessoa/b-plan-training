@@ -40,10 +40,12 @@ function addExercise(event) {
     let weightItem = weights;
     let repsItem = reps;
     let editBtn = '<button class="editButton">Edit</button>';
-    let removeBtn = '<button class="delButton">Remove</button>';
+    let removeBtn = '<img src="images/trash-solid-full.png" class="delButton">';
+
+    //let removeBtn = '<button class="delButton"><img src="images/trash-solid-full.png" class="delButton"></button>';
 
     let exerciseElement = document.createElement('tr');
-    exerciseElement.innerHTML = `<td>${exerciseItem}</td><td>${weightItem}</td><td>${repsItem}</td><td>${editBtn}</td><td>${removeBtn}</td>`;  
+    exerciseElement.innerHTML = `<td>${exerciseItem}</td><td>${weightItem}</td><td>${repsItem}</td><td>${editBtn}</td><td>${removeBtn}</td>`;
 
     tbodyElement.appendChild(exerciseElement);
 
@@ -70,7 +72,7 @@ function addExercise(event) {
     localStorage.setItem(workoutId, JSON.stringify(exercisesList));
 
     // Delete Button:
-    let delButton = document.getElementsByClassName('delButton');
+    let delButton = tbodyElement.getElementsByClassName('delButton');
 
     if (delButton.length > 0) {
 
@@ -103,7 +105,9 @@ function updateWorkout(workout, tableWorkout) {
     let weights;
     let reps;
     let editBtn = '<button class="editButton">Edit</button>';
-    let removeBtn = '<button class="delButton">Remove</button>';
+    let removeBtn = '<img src="images/trash-solid-full.png" class="delButton">';
+    
+    //let removeBtn = '<button class="delButton"><img src="images/trash-solid-full.png" class="trashImg"></button>';
 
     for (let i = 0; i < exercisesOfTable.length; i++) {
         exercise = exercisesOfTable[i].exercise;
@@ -158,12 +162,12 @@ function editExercise(event) {
     let saveButton = document.createElement('button');
     saveButton.className = 'saveButton';
     saveButton.innerText = 'Save';
-    
+
     buttonParentElement.appendChild(saveButton);
 
     saveButton.addEventListener('click', saveExercise)
 
-    
+
     let trElement = buttonParentElement.parentElement;
 
     let exerciseNameElement = trElement.firstElementChild;
@@ -173,17 +177,17 @@ function editExercise(event) {
 
     let textAreaExerciseName = document.createElement('textarea');
     textAreaExerciseName.innerText = exerciseName;
-    
+
     exerciseNameElement.appendChild(textAreaExerciseName);
 
     let weightsElement = exerciseNameElement.nextElementSibling;
-    
+
     let weights = weightsElement.innerText;
     weightsElement.innerText = '';
 
     let textareaWeights = document.createElement('textarea');
     textareaWeights.innerText = weights;
-    
+
     weightsElement.appendChild(textareaWeights);
 
     let repsElement = weightsElement.nextElementSibling;
@@ -209,31 +213,31 @@ function saveExercise(event) {
 
     let tdNameExercise = textareaExerciseName.parentElement;
     let tdWeights = textareaWeights.parentElement;
-    let tdReps = texteareaReps.parentElement;  
+    let tdReps = texteareaReps.parentElement;
 
     tdNameExercise.innerHTML = textareaExerciseName.value;
     tdWeights.innerHTML = textareaWeights.value;
     tdReps.innerHTML = texteareaReps.value;
-    
+
 
     let workoutId = trParentElement.id.slice(0, 8);
     let exerciseId = trParentElement.id.slice(8);
 
-    
-    
+
+
     let exercisesListEdited = JSON.parse(localStorage.getItem(workoutId)) || [];
 
     let exerciseEdited = {
         exercise: textareaExerciseName.value,
         weights: textareaWeights.value,
         reps: texteareaReps.value
-    } 
+    }
 
     exercisesListEdited[exerciseId] = exerciseEdited;
 
     localStorage.setItem(workoutId, JSON.stringify(exercisesListEdited));
 
-    
+
     let editButton = tdButtonParentElement.firstElementChild;
     editButton.disabled = false;
 
