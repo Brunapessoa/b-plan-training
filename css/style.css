@@ -24,7 +24,7 @@ header {
     background-position: left-center;
     background-attachment: scroll;
     
-    height: 200px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
