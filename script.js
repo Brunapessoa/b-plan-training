@@ -43,8 +43,7 @@ function addExercise(event) {
     let removeBtn = '<button class="delButton">Remove</button>';
 
     let exerciseElement = document.createElement('tr');
-    exerciseElement.innerHTML = `<td>${exerciseItem}</td><td>${weightItem}</td><td>${repsItem}</td><td>${editBtn}</td><td>${removeBtn}</td>`;
-    // console.log(exerciseElement);      
+    exerciseElement.innerHTML = `<td>${exerciseItem}</td><td>${weightItem}</td><td>${repsItem}</td><td>${editBtn}</td><td>${removeBtn}</td>`;  
 
     tbodyElement.appendChild(exerciseElement);
 
@@ -53,7 +52,6 @@ function addExercise(event) {
         for (let i = 0; i < trElements.length; i++) {
             trElements[i].id = workoutId + `${(i)}`;
         }
-        console.log(trElements);
     }
 
     inputExercise[workoutIndex].value = '';
@@ -68,8 +66,6 @@ function addExercise(event) {
         reps: repsItem
     }
     exercisesList.push(newExercise);
-
-    //console.log(exercisesList);
 
     localStorage.setItem(workoutId, JSON.stringify(exercisesList));
 
@@ -101,7 +97,6 @@ function addExercise(event) {
 function updateWorkout(workout, tableWorkout) {
     const exercisesOfTable = JSON.parse(localStorage.getItem(workout)) || [];
 
-    // console.log(exercisesOfTable);
     const tableExercises = document.getElementById(tableWorkout);
 
     let exercise;
@@ -127,7 +122,6 @@ function updateWorkout(workout, tableWorkout) {
         for (let i = 0; i < trElements.length; i++) {
             trElements[i].id = workout + `${(i)}`;
         }
-        console.log(trElements);
     }
 
     let delButton = tableExercises.getElementsByClassName('delButton');
@@ -204,7 +198,7 @@ function editExercise(event) {
 }
 
 function saveExercise(event) {
-    console.log('entrou na funcao para salvar a edicao do exercicio');
+
     let tdButtonParentElement = event.target.parentElement;
 
     let trParentElement = tdButtonParentElement.parentElement;
@@ -221,13 +215,10 @@ function saveExercise(event) {
     tdWeights.innerHTML = textareaWeights.value;
     tdReps.innerHTML = texteareaReps.value;
     
-    //console.log(trParentElement.id);
-    
+
     let workoutId = trParentElement.id.slice(0, 8);
     let exerciseId = trParentElement.id.slice(8);
-    console.log(exerciseId);
-    
-    // console.log(workoutId);
+
     
     
     let exercisesListEdited = JSON.parse(localStorage.getItem(workoutId)) || [];
@@ -286,7 +277,7 @@ function delExercise(event) {
     }
 
     let exercisesList = JSON.parse(localStorage.getItem(workoutId));
-    // console.log(exercisesList);
+
     let idTrButElement = trButElement.id;
 
     let strIdExercise = idTrButElement.slice(8, 9);
@@ -294,7 +285,7 @@ function delExercise(event) {
     let numIdExercise = Number(strIdExercise) - 1;
 
     exercisesList.splice(numIdExercise, 1);
-    console.log(exercisesList);
+
 
     localStorage.setItem(workoutId, JSON.stringify(exercisesList));
 

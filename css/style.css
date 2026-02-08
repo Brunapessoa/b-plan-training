@@ -1,8 +1,16 @@
+@charset "UFT-8";
+
+@font-face {
+    font-family: "Allura";
+    src: url('../fonts/allura-regular/Allura-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 * {
     margin: 0px;
     padding: 0px;
 
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -10,29 +18,36 @@ body {
 }
 
 header {
-    background-image: url(./images/header-image-small.jpg);
+    background-image: url(../images/header-image-small.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: left-center;
     background-attachment: scroll;
-
+    
     height: 200px;
     display: flex;
-
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    
 }
 
 h1 {
-    color: bisque;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.712);
-    margin: 20px 0px 0px 20px;
+    font-family: 'Allura', cursive, serif;
+    color: #FF9161;
+    text-shadow: 1px 1px 1px #3C444A;
+    padding-right: 20px;
 }
 
 header p {
-    color: bisque;
-    margin: 40px 0px 0px 20px;
+    color: #FF9161;
+    padding-right: 20px;
+    font-style: italic;
+    
 }
 
 main {
+    font-family: Arial, Helvetica, sans-serif;
     display: grid;
     align-content: space-evenly;
     justify-content: center;
