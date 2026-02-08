@@ -64,11 +64,11 @@ div {
 table {
     margin-bottom: 15px;
     text-align: center;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     border-radius: 2px;
     border: 1px solid;
-    border-color: rgba(214, 214, 213, 0.699);   
-    font-size: 0.9em; 
+    border-color: rgba(214, 214, 213, 0.699);  
     color: rgb(58, 58, 58);
     border-collapse: collapse;
 }
