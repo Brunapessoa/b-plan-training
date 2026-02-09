@@ -11,7 +11,7 @@
     margin: 0px;
     padding: 0px;
     /* box-sizing: border-box; */
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 body {
@@ -114,9 +114,32 @@ input {
 }
 
 .delButton {
-    width: 20px;
-    height: 20px;
+    background-image: url('../images/trash-solid-full.png');
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
 }
+
+.editButton {
+    background-image: url('../images/pen-solid.png');
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+
+}
+
+.editButton:disabled {
+    opacity: 50%;
+}
+
 
 button {
     padding: 2px;
