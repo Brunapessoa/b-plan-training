@@ -47,13 +47,19 @@ function addExercise(event) {
     
     tbodyElement.appendChild(exerciseElement);
 
-
-    let trElements = divWorkout.getElementsByTagName('tr');
+    let trElements = tbodyElement.getElementsByTagName('tr');
     if (exerciseElement) {
         for (let i = 0; i < trElements.length; i++) {
             trElements[i].id = workoutId + `${(i)}`;
         }
     }
+
+/*      let trElements = divWorkout.getElementsByTagName('tr');
+    if (exerciseElement) {
+        for (let i = 0; i < trElements.length; i++) {
+            trElements[i].id = workoutId + `${(i)}`;
+        }
+    }  */
 
     inputExercise[workoutIndex].value = '';
     inputWeight[workoutIndex].value = '';
@@ -137,11 +143,11 @@ function updateWorkout(workout, tableWorkout) {
             removeBtn.addEventListener('click', delExercise);
         }
     }
-
+    
     let editButton = tableExercises.getElementsByClassName('editButton')
-
+    
     if (editButton.length > 0) {
-
+        
         let editBtn;
         for (let i = 0; i < editButton.length; i++) {
             editBtn = editButton[i];
@@ -150,118 +156,121 @@ function updateWorkout(workout, tableWorkout) {
     }
 }
 
+
 function editExercise(event) {
     let editButtonElemet = event.target;
     editButtonElemet.disabled = true;
-
-
+    
+    
     let buttonParentElement = event.target.parentElement;
-
+    
     let saveButton = document.createElement('button');
     saveButton.className = 'saveButton';
-
+    
     buttonParentElement.appendChild(saveButton);
-
+    
     saveButton.addEventListener('click', saveExercise)
-
-
+    
+    
     let trElement = buttonParentElement.parentElement;
-
+    
     let exerciseNameElement = trElement.firstElementChild;
-
+    
     let exerciseName = exerciseNameElement.innerText;
     exerciseNameElement.innerText = '';
-
+    
     let textAreaExerciseName = document.createElement('textarea');
     textAreaExerciseName.innerText = exerciseName;
 
     exerciseNameElement.appendChild(textAreaExerciseName);
-
+    
     let weightsElement = exerciseNameElement.nextElementSibling;
-
+    
     let weights = weightsElement.innerText;
     weightsElement.innerText = '';
-
+    
     let textareaWeights = document.createElement('textarea');
     textareaWeights.innerText = weights;
-
+    
     weightsElement.appendChild(textareaWeights);
-
+    
     let repsElement = weightsElement.nextElementSibling;
-
+    
     let reps = repsElement.innerText;
     repsElement.innerText = '';
-
+    
     let texteareaReps = document.createElement('textarea');
     texteareaReps.innerText = reps;
-
+    
     repsElement.appendChild(texteareaReps)
 }
 
 function saveExercise(event) {
-
+    
     let tdButtonParentElement = event.target.parentElement;
-
+    
     let trParentElement = tdButtonParentElement.parentElement;
-
+    
     let textareaExerciseName = trParentElement.getElementsByTagName('textarea')[0];
     let textareaWeights = trParentElement.getElementsByTagName('textarea')[1];
     let texteareaReps = trParentElement.getElementsByTagName('textarea')[2];
-
+    
     let tdNameExercise = textareaExerciseName.parentElement;
     let tdWeights = textareaWeights.parentElement;
     let tdReps = texteareaReps.parentElement;
-
+    
     tdNameExercise.innerHTML = textareaExerciseName.value;
     tdWeights.innerHTML = textareaWeights.value;
     tdReps.innerHTML = texteareaReps.value;
-
-
+    
+    
     let workoutId = trParentElement.id.slice(0, 8);
     let exerciseId = trParentElement.id.slice(8);
-
-
-
-    let exercisesListEdited = JSON.parse(localStorage.getItem(workoutId)) || [];
-
+    
+    let exercisesListEdited = JSON.parse(localStorage.getItem(workoutId));
+    
+    // let exercisesListEdited = JSON.parse(localStorage.getItem(workoutId)) || [];
+    
     let exerciseEdited = {
         exercise: textareaExerciseName.value,
         weights: textareaWeights.value,
         reps: texteareaReps.value
     }
-
+    
     exercisesListEdited[exerciseId] = exerciseEdited;
-
+    console.log(exerciseId);
+    
+    console.log(exercisesListEdited);
+    
+    
     localStorage.setItem(workoutId, JSON.stringify(exercisesListEdited));
-
+    
     let editButton = tdButtonParentElement.firstElementChild;
     editButton.disabled = false;
-
+    
     let saveButton = editButton.nextElementSibling;
-
+    
     tdButtonParentElement.removeChild(saveButton);
 }
 
-
 function onLoadExercises() {
-
     updateWorkout('workoutA', 'tableA');
     updateWorkout('workoutB', 'tableB');
     updateWorkout('workoutC', 'tableC');
     updateWorkout('workoutD', 'tableD');
     updateWorkout('workoutE', 'tableE');
-
 }
+
 
 function delExercise(event) {
     let butElement = event.target.parentElement;
-
+    
     let trButElement = butElement.parentElement;
-
+    
     let tbodyElement = trButElement.parentElement;
-
+    
     tbodyElement.removeChild(trButElement);
-
+    
     let tableId = tbodyElement.id;
     let workoutId = '';
     if (tableId == 'tableA') {
@@ -304,4 +313,3 @@ function delExercise(event) {
 }
 
 window.onload = onLoadExercises;
-
