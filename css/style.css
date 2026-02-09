@@ -94,11 +94,11 @@ thead {
 }
 
 thead th {
-    padding: 2px;
+    padding: 5px 2px;
 }
 
 tbody td {
-    padding: 10px 4px;
+    padding: 5px 2px;
 }
 
 tbody > tr:nth-child(2n) {
@@ -151,13 +151,10 @@ td .delButton {
     height: 30px;
 }
 
-input {
-    padding: 2px;
-}
 
 button {
     padding: 2px;
-
+    
     background-size: 18px 18px;
     background-repeat: no-repeat;
     background-position: center;
@@ -185,6 +182,16 @@ button {
     background-image: url('../images/circle-check-solid.png');
 }
 
+input {
+    padding: 2px;
+    height: 1.5em;
+    font-size: 0.9em;
+}
+
+.addButton{
+    background-image: url('../images/circle-plus-solid.png');
+    padding: 10px;
+}
 
 footer {
     background-color: rgba(128, 128, 128, 0.445);
