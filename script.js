@@ -159,7 +159,6 @@ function editExercise(event) {
 
     let saveButton = document.createElement('button');
     saveButton.className = 'saveButton';
-    saveButton.innerText = 'Save';
 
     buttonParentElement.appendChild(saveButton);
 

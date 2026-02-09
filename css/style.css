@@ -11,7 +11,7 @@
     margin: 0px;
     padding: 0px;
     /* box-sizing: border-box; */
-    /* border: 1px solid red; */
+    /*border: 1px solid red; */
 }
 
 body {
@@ -68,43 +68,90 @@ div {
 table {
     margin-bottom: 15px;
     text-align: center;
-    width: 100%;
-    max-width: 200px;
+    width: 450px;
+    max-width: 450px;
     border-radius: 2px;
     border: 1px solid;
     border-color: rgba(214, 214, 213, 0.699);  
     color: rgb(58, 58, 58);
     border-collapse: collapse;
-    font-size: 0.9em;
 }
 
 thead {
-    background-color: rgba(221, 200, 174, 0.336);
+    background-color: rgb(240, 223, 201);
+    font-size: 0.9em;
 }
-th {
+
+thead th {
     padding: 2px;
 }
 
-tbody > tr:nth-child(2n) {
-    background-color: rgba(233, 233, 233, 0.829);
+tbody td {
+    padding: 10px 4px;
 }
 
-th, td {
+tbody > tr:nth-child(2n) {
+    background-color: rgb(234, 231, 231);
+}
+
+/* th, td {
     box-sizing: inherit;
 }
 
-td, th {
-    border-inline: none;
-}
 
+ td, th {
+    border-inline: none;
+} */
+ 
 textarea {
-    width: 80%;
+    margin: 0px;
+    width: 90%;
     max-width: 100%; /* ajuste conforme necessário */
-    height: 25px; /* ajuste a altura */
+    height: 100%; /* ajuste a altura */
     resize: none; /* impede o usuário de redimensionar */
     padding: 2px;
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
+}
+
+td:nth-child(1) {
+    padding: 0px;
+}
+
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+}
+
+
+th:nth-child(4),
+td:nth-child(4) {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+}
+
+
+td .delButton {
+    width: 30px;
+    height: 30px;
 }
 
 input {
@@ -118,13 +165,15 @@ input {
     background-size: 18px 18px;
     background-repeat: no-repeat;
     background-position: center;
-    width: 30px;
-    height: 30px;
+    width: 80%;
+    height: 80%;
     border: none;
     background-color: transparent;
+
 }
 
 .editButton {
+    margin: 5px;
     background-image: url('../images/pen-solid.png');
     background-size: 18px 18px;
     background-repeat: no-repeat;
@@ -133,11 +182,22 @@ input {
     height: 30px;
     border: none;
     background-color: transparent;
-
 }
 
 .editButton:disabled {
     opacity: 50%;
+}
+
+.saveButton {
+    margin: 5px;
+    background-image: url('../images/circle-check-solid.png');
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
 }
 
 
