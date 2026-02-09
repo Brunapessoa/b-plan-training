@@ -68,8 +68,8 @@ div {
 table {
     margin-bottom: 15px;
     text-align: center;
-    width: 450px;
-    max-width: 450px;
+    width: 90%;
+    max-width: 90%;
     border-radius: 2px;
     border: 1px solid;
     border-color: rgba(214, 214, 213, 0.699);  

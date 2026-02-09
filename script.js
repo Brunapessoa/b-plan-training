@@ -54,13 +54,6 @@ function addExercise(event) {
         }
     }
 
-/*      let trElements = divWorkout.getElementsByTagName('tr');
-    if (exerciseElement) {
-        for (let i = 0; i < trElements.length; i++) {
-            trElements[i].id = workoutId + `${(i)}`;
-        }
-    }  */
-
     inputExercise[workoutIndex].value = '';
     inputWeight[workoutIndex].value = '';
     inputReps[workoutIndex].value = '';
