@@ -161,12 +161,14 @@ button {
     width: 30px;
     height: 30px;
     border: none;
-    background-color: transparent;
+    background-color: transparent; 
     transition: opacity 0.2s, transform 0.2s;
+
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-button:active,
-button:hover {
+button:active{
     opacity: 50%;
     transform: scale(0.95);
 }
