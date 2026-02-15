@@ -284,7 +284,7 @@ function delExercise(event) {
 
     let strIdExercise = idTrButElement.slice(8, 9);
     // pega apenas o número da strind do id
-    let numIdExercise = Number(strIdExercise) - 1;
+    let numIdExercise = Number(strIdExercise);
 
     exercisesList.splice(numIdExercise, 1);
 
