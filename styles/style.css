@@ -187,16 +187,6 @@ button:active {
     background-image: url('../images/circle-check-solid.png');
 }
 
-.inputDiv {
-    padding: 2px;
-    height: 1.5em;
-    font-size: 1em;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 input {
     margin: 2px;
 
